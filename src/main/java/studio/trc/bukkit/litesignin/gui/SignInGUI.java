@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import studio.trc.bukkit.litesignin.api.Storage;
 import studio.trc.bukkit.litesignin.config.ConfigurationUtil;
 import studio.trc.bukkit.litesignin.config.ConfigurationType;
@@ -46,8 +47,7 @@ public class SignInGUI
         /**
          * Create chest GUI
          */
-        Inventory gui = Bukkit.createInventory(null, 54, MessageUtil.toColor(replace(player, section.getString("GUI-Name"), "{date}", new SimpleDateFormat(section.getString("Date-Format")).format(new Date()))));
-        
+        Inventory gui = Bukkit.createInventory(null, 54, PlaceholderAPI.setPlaceholders(player,MessageUtil.toColor(replace(player, section.getString("GUI-Name"), "{date}", new SimpleDateFormat(section.getString("Date-Format")).format(new Date())))));
         /**
          * Elements
          */
@@ -79,9 +79,9 @@ public class SignInGUI
          */
         Date now = new Date();
         if (month == SignInDate.getInstance(now).getMonth()) {
-            gui = Bukkit.createInventory(null, 54, MessageUtil.toColor(replace(player, section.getString("GUI-Name"), "{date}", new SimpleDateFormat(section.getString("Date-Format")).format(now))));
+            gui = Bukkit.createInventory(null, 54, PlaceholderAPI.setPlaceholders(player,MessageUtil.toColor(replace(player, section.getString("GUI-Name"), "{date}", new SimpleDateFormat(section.getString("Date-Format")).format(now)))));
         } else {
-            gui = Bukkit.createInventory(null, 54, MessageUtil.toColor(replace(player, section.getString("Specified-Month-GUI-Name"), "{month}", String.valueOf(month))));
+            gui = Bukkit.createInventory(null, 54, PlaceholderAPI.setPlaceholders(player,MessageUtil.toColor(replace(player, section.getString("Specified-Month-GUI-Name"), "{month}", String.valueOf(month)))));
         }
         
         /**
@@ -115,15 +115,15 @@ public class SignInGUI
          */
         if (year == today.getYear()) {
             if (month == today.getMonth()) {
-                gui = Bukkit.createInventory(null, 54, MessageUtil.toColor(replace(player, section.getString("GUI-Name"), "{date}", new SimpleDateFormat(section.getString("Date-Format")).format(new Date()))));
+                gui = Bukkit.createInventory(null, 54, PlaceholderAPI.setPlaceholders(player,MessageUtil.toColor(replace(player, section.getString("GUI-Name"), "{date}", new SimpleDateFormat(section.getString("Date-Format")).format(new Date())))));
             } else {
-                gui = Bukkit.createInventory(null, 54, MessageUtil.toColor(replace(player, section.getString("Specified-Month-GUI-Name"), "{month}", String.valueOf(month))));
+                gui = Bukkit.createInventory(null, 54, PlaceholderAPI.setPlaceholders(player,MessageUtil.toColor(replace(player, section.getString("Specified-Month-GUI-Name"), "{month}", String.valueOf(month)))));
             }
         } else {
             Map<String, String> placeholders = MessageUtil.getDefaultPlaceholders();
             placeholders.put("{month}", String.valueOf(month));
             placeholders.put("{year}", String.valueOf(year));
-            gui = Bukkit.createInventory(null, 54, MessageUtil.replacePlaceholders(player, section.getString("Specified-Year-GUI-Name"), placeholders));
+            gui = Bukkit.createInventory(null, 54, PlaceholderAPI.setPlaceholders(player,MessageUtil.replacePlaceholders(player, section.getString("Specified-Year-GUI-Name"), placeholders)));
         }
         
         /**
